@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <div id="layoutAuthentication">
+    <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
@@ -9,23 +8,24 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        {{ message }}
-                                        <form v-on:submit.prevent="Login" method="post">
+                                        <p>{{ message }}</p>
+                                        <br>
+                                        <form>
                                             <div class="form-floating mb-3">
-                                                <input v-model="email" class="form-control" id="email" type="text" placeholder="email" />
-                                                <label for="email">Email</label>
+                                                <input class="form-control" v-model="email" id="inputEmail" type="email" placeholder="name@example.com" required/>
+                                                <label for="inputEmail">Email address</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input v-model="password" class="form-control" id="inputPassword" type="password" placeholder="Password" />
+                                                <input class="form-control" v-model="password" id="inputPassword" type="password" placeholder="Password" required/>
                                                 <label for="inputPassword">Password</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <input type="submit" value="Login" class="btn btn-primary" @click="Login()">
+                                                <a class="btn btn-primary" href="#" @click="Login()">Login</a>
                                             </div>
                                         </form>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="#">Need an account? Sign up!</a></div>
                                     </div>
+                                    <div class="card-footer text-center py-3">
+                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -33,13 +33,26 @@
                     </div>
                 </main>
             </div>
+            <div id="layoutAuthentication_footer">
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
-    </div>
 </template>
-
 <script>
-module.exports =  {
-    data: function(){
+module.exports = {
+    //state 
+    data : function(){
         return {
             email: "",
             password: "",
@@ -48,32 +61,31 @@ module.exports =  {
     },
     methods: {
         Login: function(){
-            this.message = "Please Wait..."; //alert notif
-            //mapping data
-            let form = {
-                "email": this.email,
-                "password": this.password
+            //
+            this.message = "Please Wait...";
+            //mapping data post
+            let data_login = {
+                //sesuai API    //sesuai state
+                "email":        this.email,
+                "password":     this.password
             }
-            axios.post(api_url + '/login', form)
-            .then(res => {
-                if(res.data.status == 1){
-                    
-                    this.message = 'login success'; //alert
-                    
-                    // Check if cookies has token
+            //post data
+            axios.post(api_url + '/login', data_login)
+            .then( res => {
+                if(res.data.status === 1){
+                    this.message = "Login Success !";
                     if(this.$cookies.isKey('Authorization')){
-                        this.$cookies.remove('Authorization');
+                        this.$cookies.remove("Authorization")
                     }
-
-                    //Saving token to cookies
                     this.$cookies.set("Authorization", res.data.token)
                     this.componentName = "apps"
                     location.reload()
+                    
                 } else {
-                    this.message = res.data.error;
+                  this.componentName = "login"
                 }
-            });
-        },
+            })
+        }
     }
 }
 </script>

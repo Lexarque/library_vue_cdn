@@ -25,22 +25,15 @@
                                 <th>ACTION</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <th>BOOK ID</th>
-                            <th>BOOK NAME</th>
-                            <th>AUTHOR</th>
-                            <th>DESC</th>
-                            <th>ACTION</th>
-                        </tfoot>
                         <tbody>
-                            <tr v-for="lb in list_book" :key="lb">
-                                <td>{{ lb.book_id }}</td>
-                                <td>{{ lb.book_name }}</td>
-                                <td>{{ lb.author }}</td>
-                                <td>{{ lb.desc }}</td>
+                            <tr v-for="(lb, i) in list_book" :key="i">
+                                <td>{{ i+1 }}</td>
+                                <td>{{ lb.name_book }}</td>
+                                <td>{{ lb.author_book }}</td>
+                                <td>{{ lb.desc_book }}</td>
                                 <td>
-                                    <button class="btn btn-info"><i class="fas fa-pencil-alt fa-fw"></i></button>
-                                    <button class="btn btn-danger"><i class="fas fa-trash-alt fa-fw"></i></button>
+                                    <button class="btn btn-info" @click="Edit(lb)" data-bs-toggle="modal" data-bs-target="#book_modal"><i class="fas fa-pencil-alt fa-fw"></i></button>
+                                    <button class="btn btn-danger" @click="Delete(lb.id_book)"><i class="fas fa-trash-alt fa-fw"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -54,23 +47,23 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Book Data</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Please Input The Corresponding Data for {{action}}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="book_name" class="form-label">Book Name</label>
-                            <input type="text" class="form-control" id="book_name" v-model="book_name" placeholder="Book Name">
+                            <label for="name_book" class="form-label">Book Name</label>
+                            <input type="text" class="form-control" id="name_book" v-model="name_book" placeholder="Book Name">
                         </div>
 
                         <div class="mb-3">
                             <label for="author" class="form-label">Author</label>
-                            <input type="text" class="form-control" id="author" v-model="author" placeholder="Author">
+                            <input type="text" class="form-control" id="author" v-model="author_book" placeholder="Author">
                         </div>
 
                         <div class="mb-3">
                             <label for="desc" class="form-label">Description</label>
-                            <textarea class="form-control" id="desc" v-model="desc" rows="3"></textarea>
+                            <textarea class="form-control" id="desc" v-model="desc_book" rows="3"></textarea>
                         </div>
 
                     </div>
@@ -88,10 +81,10 @@ module.exports = {
     //state
     data : function(){
         return {
-            book_id: "",
-            book_name: "",
-            author: "",
-            desc: "",
+            id_book: "",
+            name_book: "",
+            author_book: "",
+            desc_book: "",
             action: "",
             list_book: [],
         }
@@ -102,17 +95,21 @@ module.exports = {
             let token = {
                 headers : { "Authorization" : "Bearer " + this.$cookies.get("Authorization")}
             }
-            axios.get(api_url + "/Book", token)
+            axios.get(api_url + "/book", token)
             .then( res => {
                 this.list_book = res.data;
             })
         },
         Add: function() {
-            this.book_id = ""
-            this.book_name = ""
-            this.author = ""
-            this.desc = ""
             this.action = "insert"
+        },
+        //lb as in abbr of list book
+        Edit: function(lb){
+            this.id_book = lb.id_book
+            this.name_book = lb.name_book
+            this.author_book = lb.author_book
+            this.desc_book = lb.desc_book
+            this.action = "update"
         },
         Save: function() {
             //mapping header token
@@ -122,21 +119,42 @@ module.exports = {
             //mapping data
             let form  = {
                 //backend       //state
-                'book_name': this.book_name,
-                'author': this.author,
-                'desc': this.desc
+                'name_book': this.name_book,
+                'author_book': this.author_book,
+                'desc_book': this.desc_book
             }
             if(this.action === 'insert'){ //POST
-                axios.post(api_url + '/Book', form, token)
+                axios.post(api_url + '/add_book', form, token)
                 .then( res => {
                     alert(res.data.message)
+                })
+            } else 
+            { //PUT
+              axios.put(api_url + '/book/' + this.id_book, token)
+                .then( res => {
+                    alert(res.data.message)
+            })}
+
+            this.getData();
+        },
+         Delete: function(id_book){
+            //mapping header token
+            let token = {
+                headers : { "Authorization" : "Bearer " + this.$cookies.get("Authorization")}
+            }
+            if(confirm("Do you want to delete this data?")){
+                
+                axios.delete(api_url + '/book/' + id_book, token)
+                .then( response => {
+                    alert(response.data.message)
                     this.getData()
                 })
-            } else { //PUT
+            } else {
+                alert("Delete Cancelled");
             }
-            $("#book_modal").modal('hide');
         }
     },
+    
     mounted() {
         this.getData()
     },
