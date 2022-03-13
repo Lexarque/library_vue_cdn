@@ -8,10 +8,20 @@ var router =
         component: httpVueLoader("src/components/Home.vue")
     },
     {
-        path: "/Book",
+        path: "/login",
+        name: "Login",
+        component: httpVueLoader("src/components/Login.vue")
+    },
+    {
+        path: "/book",
         name: "Book",
         component: httpVueLoader("src/components/Book.vue")
-    }
+    },
+    {
+        path:"/member",
+        name: "Member",
+        component: httpVueLoader("./src/components/Member.vue")
+    },
 ];
 
 var routes = new VueRouter({routes: router, base : "/"});
@@ -26,7 +36,7 @@ var app = new Vue({
         "login": httpVueLoader("src/components/Login.vue"),
     },
     data: {
-        users:{
+        user:{
             id: '',
             name: '',
             username: '',
@@ -34,24 +44,21 @@ var app = new Vue({
             role: '',
         },
         componentName: '',
-        router: 'routes',
+    },
+    router: routes,
+    methods: {
         TokenCheck: function(){
             //Check if cookies has token
             if(this.$cookies.isKey('Authorization')){
                 //Token Validation
                 let token = {
                     headers : {
-                        "Authorization" : "Bearer " + this.$cookies.isKey('Authorization') 
+                        "Authorization" : "Bearer " + this.$cookies.get('Authorization') 
                     }
                 }
                 axios.get(api_url + '/getAuth', token).then(res => {
                     if(res.data.status === 1){
-                        //Load apps components
                         this.componentName = "apps";
-                        this.id = "res.data.data.user.id";
-                        this.name = "res.data.data.user.name";
-                        this.username = "res.data.data.user.username";
-                        this.role = "res.data.data.user.role";
                     }else{
                         this.componentName = "login";
                     }
