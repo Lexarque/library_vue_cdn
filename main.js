@@ -24,7 +24,7 @@ var router =
     },
 ];
 
-var routes = new VueRouter({routes: router, base : "/"});
+const routes = new VueRouter({routes: router, base : "/"});
 
 // Instance Vue
 
@@ -33,6 +33,7 @@ var app = new Vue({
     components: {
         "home": httpVueLoader("src/components/Home.vue"),
         "apps": httpVueLoader("src/components/Apps.vue"),
+        "member": httpVueLoader("src/components/Member.vue"),
         "login": httpVueLoader("src/components/Login.vue"),
     },
     data: {

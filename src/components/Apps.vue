@@ -35,20 +35,15 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                                 <router-link to="/" class="nav-link">Dashboard</router-link>
                             </a>
-
                             <div class="sb-sidenav-menu-heading">Options</div>
                             <div class="nav-link">
                                 <div class="sb-nav-link-icon"><i class=" fas fa-solid fa-book"></i></div>
                                 <router-link to="/book" class="nav-link">Book</router-link>
-                               
                             </div>
-                            
                             <div class="nav-link">
                                 <div class="sb-nav-link-icon"><i class="fas fa-solid fa-user"></i></div>
                                 <router-link to="/member" class="nav-link"> Member</router-link>
-                               
                             </div>
-
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Transaction
