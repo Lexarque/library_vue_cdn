@@ -42,7 +42,7 @@
                             </div>
                             <div class="nav-link">
                                 <div class="sb-nav-link-icon"><i class="fas fa-solid fa-user"></i></div>
-                                <router-link to="/member" class="nav-link"> Member</router-link>
+                                <router-link to="/students" class="nav-link">Students</router-link>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -56,7 +56,6 @@
                                     <a class="nav-link" >Return</a>
                                 </nav>
                             </div>
-
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -65,8 +64,7 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" @click="Logout()">Logout</a>
+                                            <router-link to="/login" @click="Logout()" class="nav-link">Logout</router-link>
                                             <a class="nav-link" href="password.html">Forgot Password</a>
                                         </nav>
                                     </div>
@@ -121,7 +119,8 @@ module.exports = {
      },
      methods: {
          Logout: function(){
-            this.$cookies.remove('Authorization')
+            this.$cookies.remove('Authorization');
+            this.componentName = 'login';
             location.reload();
         },
          book: function(){
