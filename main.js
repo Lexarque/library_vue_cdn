@@ -12,15 +12,20 @@ var router =
         name: "Login",
         component: httpVueLoader("src/components/Login.vue")
     },
+    // {
+    //     path: "/register",
+    //     name: "Register",
+    //     component: httpVueLoader("src/components/Register.vue")
+    // },
     {
         path: "/book",
         name: "Book",
         component: httpVueLoader("src/components/Book.vue")
     },
     {
-        path:"/member",
-        name: "Member",
-        component: httpVueLoader("./src/components/Member.vue")
+        path:"/students",
+        name: "Students",
+        component: httpVueLoader("./src/components/Students.vue")
     },
 ];
 
@@ -33,8 +38,9 @@ var app = new Vue({
     components: {
         "home": httpVueLoader("src/components/Home.vue"),
         "apps": httpVueLoader("src/components/Apps.vue"),
-        "member": httpVueLoader("src/components/Member.vue"),
+        "students": httpVueLoader("src/components/Students.vue"),
         "login": httpVueLoader("src/components/Login.vue"),
+        // "register": httpVueLoader("src/components/Register.vue"),
     },
     data: {
         user:{
