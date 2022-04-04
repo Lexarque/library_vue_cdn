@@ -30,7 +30,7 @@
                                 <td>{{ i+1 }}</td>
                                 <td>{{ lb.name_book }}</td>
                                 <td>{{ lb.author_book }}</td>
-                                <td>{{ lb.desc_book }}</td>
+                                <td>{{ lb.desc_book | snippet}}</td>
                                 <td>
                                     <button class="btn btn-secondary" @click="Edit(lb)" data-bs-toggle="modal" data-bs-target="#bookcover_modal"><i class="fas fa-solid fa-image"></i></button>
                                     <button class="btn btn-info" @click="Edit(lb)" data-bs-toggle="modal" data-bs-target="#book_modal"><i class="fas fa-pencil-alt fa-fw"></i></button>
@@ -75,6 +75,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Cover Upload Modal -->
         <div class="modal fade" id="bookcover_modal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -200,6 +202,7 @@ module.exports = {
                 })    
         },
         UploadCover: function(e){
+            //why index 0? because it's only one file
             this.book_cover=e.target.files[0]
         },
         Upload: function(id_book){
@@ -207,6 +210,7 @@ module.exports = {
                 headers : {"Authorization" : "Bearer " + this.$cookies.get("Authorization"),'Content-Type':'multipart/form-data'}
             }
 
+            //images can only be uploaded through form data
             let form = new FormData()
             form.append('book_cover', this.book_cover)
 
