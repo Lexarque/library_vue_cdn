@@ -24,6 +24,7 @@
                                 <th>ADDRESS</th>
                                 <th>CLASS</th>
                                 <th>MAJOR</th>
+                                <th>PHOTO</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
@@ -36,6 +37,7 @@
                                 <td>{{ dt.address }}</td>
                                 <td>{{ dt.name_student_class }}</td>
                                 <td>{{ dt.group_student_class }}</td>
+                                <td> <img :src="image_url + 'images/' + dt.photo_students" alt="Book Cover" width="70"></td>
                                 <td>
                                     <button class="btn btn-secondary" @click="Edit(dt)" data-bs-toggle="modal" data-bs-target="#students_photo_modal"><i class="fas fa-solid fa-image"></i></button>
                                     <button class="btn btn-info" @click="Edit(dt)" data-bs-toggle="modal" data-bs-target="#students_modal"><i class="fas fa-pencil-alt fa-fw"></i></button>

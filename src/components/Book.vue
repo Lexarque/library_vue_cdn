@@ -22,6 +22,7 @@
                                 <th>BOOK NAME</th>
                                 <th>AUTHOR</th>
                                 <th>DESC</th>
+                                <th>COVER</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
@@ -31,6 +32,7 @@
                                 <td>{{ lb.name_book }}</td>
                                 <td>{{ lb.author_book }}</td>
                                 <td>{{ lb.desc_book | snippet}}</td>
+                                <td> <img :src="image_url + 'images/' + lb.image" alt="Book Cover" width="70"></td>
                                 <td>
                                     <button class="btn btn-secondary" @click="Edit(lb)" data-bs-toggle="modal" data-bs-target="#bookcover_modal"><i class="fas fa-solid fa-image"></i></button>
                                     <button class="btn btn-info" @click="Edit(lb)" data-bs-toggle="modal" data-bs-target="#book_modal"><i class="fas fa-pencil-alt fa-fw"></i></button>
