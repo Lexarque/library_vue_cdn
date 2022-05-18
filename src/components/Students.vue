@@ -242,7 +242,7 @@ module.exports = {
             let form = new FormData()
             form.append('photo_students', this.photo_students)
 
-            axios.post(api_url + '/students/upload_cover/'+ id_students, form, token)
+            axios.post(api_url + '/students/upload_photo/'+ id_students, form, token)
                 .then(response => {
                     alert(response.data.message)
                 })
