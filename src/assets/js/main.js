@@ -32,6 +32,11 @@ var router =
         path:"/borrow",
         name: "Borrow",
         component: httpVueLoader("./src/components/Borrow.vue")
+    },
+    {
+        path:"/return",
+        name: "Return",
+        component: httpVueLoader("./src/components/Return.vue")
     }
 ];
 
