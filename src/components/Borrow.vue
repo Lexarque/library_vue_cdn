@@ -157,7 +157,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="dt in return_data" :key="dt">
-                                    <td> {{ ret.fine }} </td>
+                                    <td> {{ dt.fee }} </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -291,10 +291,10 @@
                         'Authorization' : 'Bearer ' + this.$cookies.get('Authorization')
                     }
                 }
-                axios.get(api_url + '/detailReturn/' + id_borrow, token)
+                axios.get(api_url + '/book_return/' + id_borrow, token)
                 .then(res => {
                     // console.log(res.data);
-                    this.return_data = res.data
+                    this.return_data = res.data.data
                     console.log(this.return_data);
                  
                 })
@@ -302,6 +302,7 @@
         },
         mounted(){
             this.getData()
+            
         }
     }
 </script>
